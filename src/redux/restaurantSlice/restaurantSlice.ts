@@ -20,6 +20,24 @@ const restaurantSlice = createSlice({
             state.errorMessage = "";
             state.successMessage = "";
         },
+        addToCart(state, action: PayloadAction<IDish>) {
+            const indexDish: number = state.cart.findIndex(
+                (el) => el.dish.id === action.payload.id,
+            );
+
+            if (indexDish === -1) {
+                state.cart.push({ count: 1, dish: action.payload });
+                return;
+            }
+
+            state.cart[indexDish].count++;
+        },
+        deleteFromCart(state, action: PayloadAction<string>) {
+            const indexDish: number = state.cart.findIndex(
+                (el) => el.dish.id === action.payload,
+            );
+            if (indexDish !== -1) state.cart[indexDish].count--;
+        },
     },
     extraReducers(builder) {
         builder
@@ -56,5 +74,6 @@ const restaurantSlice = createSlice({
     },
 });
 
-export const { clearMessages } = restaurantSlice.actions;
+export const { clearMessages, addToCart, deleteFromCart } =
+    restaurantSlice.actions;
 export default restaurantSlice.reducer;

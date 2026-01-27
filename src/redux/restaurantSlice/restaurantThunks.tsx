@@ -22,6 +22,6 @@ export const getDishesThunk = createAsyncThunk<IDish[]>(
 export const setOrderThunk = createAsyncThunk<void, number>(
     "restaurant-slice/post",
     async (info) => {
-        await firebaseApi.post("/orders", info);
+        await firebaseApi.post("/orders.json", info);
     },
 );
