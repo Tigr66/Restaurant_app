@@ -1,5 +1,4 @@
 import {
-    Button,
     Card,
     CardActions,
     CardContent,
@@ -15,7 +14,6 @@ import {
     addToCart,
     deleteFromCart,
 } from "../redux/restaurantSlice/restaurantSlice";
-
 import ShoppingCartRoundedIcon from "@mui/icons-material/ShoppingCartRounded";
 import AddSharpIcon from "@mui/icons-material/AddSharp";
 import RemoveSharpIcon from "@mui/icons-material/RemoveSharp";
@@ -66,31 +64,32 @@ const DishCard = ({ dish }: DishCardProps) => {
                 {count ? (
                     <>
                         <IconButton
+                            aria-label="Отнять одно"
                             onClick={() => dispatch(deleteFromCart(dish.id))}
                         >
-                            <RemoveSharpIcon
-                                sx={{
-                                    color: "#0080E6",
-                                }}
-                            />
+                            <RemoveSharpIcon color="primary" />
                         </IconButton>
                         <Typography>{count}</Typography>
-                        <IconButton onClick={() => dispatch(addToCart(dish))}>
-                            <AddSharpIcon
-                                sx={{
-                                    color: "#0080E6",
-                                }}
-                            />
+                        <IconButton
+                            aria-label="Добавить ещё одно"
+                            onClick={() => dispatch(addToCart(dish))}
+                        >
+                            <AddSharpIcon color="primary" />
                         </IconButton>
                     </>
                 ) : (
                     <Tooltip title="Добавить в корзину">
-                        <IconButton onClick={() => dispatch(addToCart(dish))}>
+                        <IconButton
+                            aria-label="Добавить в корзину"
+                            onClick={() => dispatch(addToCart(dish))}
+                        >
                             <ShoppingCartRoundedIcon
                                 sx={{
                                     width: "40px",
                                     height: "40px",
-                                    color: "#0080E6",
+                                    "&:hover": {
+                                        color: "#0080E6",
+                                    },
                                 }}
                             />
                         </IconButton>

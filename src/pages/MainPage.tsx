@@ -1,9 +1,10 @@
-import { Box, Stack } from "@mui/material";
+import { Stack } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { type AppDispatch, type RootState } from "../redux/store";
 import { useEffect } from "react";
 import { getDishesThunk } from "../redux/restaurantSlice/restaurantThunks";
 import DishCard from "../components/DishCard";
+import Cart from "../components/Cart";
 
 const MainPage = () => {
     const dispatch = useDispatch<AppDispatch>();
@@ -31,12 +32,14 @@ const MainPage = () => {
                         backgroundColor: "#888",
                         borderRadius: 8,
                     },
+                    borderRight: "2px solid black",
                 }}
             >
                 {dishes.map((el) => {
                     return <DishCard key={el.id} dish={el} />;
                 })}
             </Stack>
+            <Cart />
         </Stack>
     );
 };
