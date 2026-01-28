@@ -18,6 +18,9 @@ const useModal = () => {
         (state: RootState) => state.restaurant.isSending,
     );
     const cart = useSelector((state: RootState) => state.restaurant.cart);
+    const successMessage = useSelector(
+        (state: RootState) => state.restaurant.successMessage,
+    );
 
     const [errors, setErrors] = useState<IInputsErrors>({
         nameError: false,
@@ -39,26 +42,29 @@ const useModal = () => {
             return;
         }
 
-        dispatch(setOrderThunk({ name, phone, address, order: cart }))
-            .unwrap()
-            .then(() => {
-                setName("");
-                setPhone("");
-                setAddress("");
-                resetErrors();
-            });
+        dispatch(
+            setOrderThunk({
+                name: name.trim(),
+                phone,
+                address: address.trim(),
+                order: cart,
+            }),
+        );
     };
 
     const handleSetName = (e: React.ChangeEvent<HTMLInputElement>) => {
         setName(e.target.value);
+        setErrors({ ...errors, nameError: false });
     };
 
     const handleSetPhone = (newValue: string) => {
         setPhone(newValue);
+        setErrors({ ...errors, phoneError: false });
     };
 
     const handleSetAddress = (e: React.ChangeEvent<HTMLInputElement>) => {
         setAddress(e.target.value);
+        setErrors({ ...errors, addressError: false });
     };
 
     const setModal = () => {
@@ -68,6 +74,14 @@ const useModal = () => {
     useEffect(() => {
         resetErrors();
     }, [isModal]);
+
+    useEffect(() => {
+        if (successMessage !== "") {
+            setName("");
+            setPhone("");
+            setAddress("");
+        }
+    }, [successMessage]);
 
     return {
         name,
