@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { IInputsErrors } from "../interfaces/IInputErrors";
 import { matchIsValidTel } from "mui-tel-input";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,6 +14,10 @@ const useModal = () => {
     const [address, setAddress] = useState<string>("");
 
     const isModal = useSelector((state: RootState) => state.restaurant.isModal);
+    const isSending = useSelector(
+        (state: RootState) => state.restaurant.isSending,
+    );
+    const cart = useSelector((state: RootState) => state.restaurant.cart);
 
     const [errors, setErrors] = useState<IInputsErrors>({
         nameError: false,
@@ -35,45 +39,42 @@ const useModal = () => {
             return;
         }
 
-        dispatch(setOrderThunk({ name, phone, address }))
+        dispatch(setOrderThunk({ name, phone, address, order: cart }))
             .unwrap()
             .then(() => {
-                dispatch(switchModal());
                 setName("");
                 setPhone("");
                 setAddress("");
-                setErrors({
-                    nameError: false,
-                    phoneError: false,
-                    addressError: false,
-                });
+                resetErrors();
             });
     };
 
     const handleSetName = (e: React.ChangeEvent<HTMLInputElement>) => {
         setName(e.target.value);
-        resetErrors();
     };
 
     const handleSetPhone = (newValue: string) => {
         setPhone(newValue);
-        resetErrors();
     };
 
     const handleSetAddress = (e: React.ChangeEvent<HTMLInputElement>) => {
         setAddress(e.target.value);
-        resetErrors();
     };
 
     const setModal = () => {
         dispatch(switchModal());
     };
 
+    useEffect(() => {
+        resetErrors();
+    }, [isModal]);
+
     return {
         name,
         phone,
         address,
         errors,
+        isSending,
         isModal,
         setModal,
         handleSetName,

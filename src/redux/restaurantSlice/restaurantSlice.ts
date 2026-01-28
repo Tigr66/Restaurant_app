@@ -93,6 +93,7 @@ const restaurantSlice = createSlice({
                 state.isSending = false;
                 state.successMessage = "Заказ успешно оформлен";
                 state.cart = [];
+                state.isModal = false;
             })
             .addCase(setOrderThunk.rejected, (state) => {
                 state.isSending = false;
@@ -101,6 +102,11 @@ const restaurantSlice = createSlice({
     },
 });
 
-export const { clearMessages, addToCart, deleteFromCart, calculateTotal,switchModal } =
-    restaurantSlice.actions;
+export const {
+    clearMessages,
+    addToCart,
+    deleteFromCart,
+    calculateTotal,
+    switchModal,
+} = restaurantSlice.actions;
 export default restaurantSlice.reducer;

@@ -29,7 +29,7 @@ const Cart = () => {
                 width: "25%",
                 height: "50%",
                 borderRadius: "8px",
-                mt: 3,
+                mt: 8,
             }}
         >
             <Typography variant="h6" sx={{ borderBottom: "1px solid black" }}>
@@ -63,10 +63,10 @@ const Cart = () => {
             </Box>
             <Stack sx={{ p: 1, gap: "5px" }}>
                 <Typography variant="h5">
-                    Доставка: {cart.length ? delivery : 0}
+                    Доставка: {cart.length ? delivery : 0} тг.
                 </Typography>
                 <Typography variant="h5">
-                    Общая сумма: {cart.length ? total : 0}
+                    Общая сумма: {cart.length ? total : 0} тг.
                 </Typography>
                 <Button
                     variant="outlined"

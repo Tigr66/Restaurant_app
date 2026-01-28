@@ -8,6 +8,7 @@ const OrderModal = () => {
         phone,
         address,
         errors,
+        isSending,
         isModal,
         setModal,
         handleSetName,
@@ -65,7 +66,11 @@ const OrderModal = () => {
                         errors.addressError ? "Введите адрес подробнее" : " "
                     }
                 />
-                <Button variant="contained" onClick={makeOrder}>
+                <Button
+                    variant="contained"
+                    loading={isSending}
+                    onClick={makeOrder}
+                >
                     Заказать
                 </Button>
             </Stack>

@@ -17,13 +17,19 @@ export const theme = createTheme({
                     width: 300,
                     position: "fixed",
                     right: 10,
-                    top: 90,
+                    top: 10,
+                    zIndex: 1000,
                 },
             },
         },
         MuiTextField: {
             defaultProps: {
-                
+                variant: "outlined"
+            },
+            styleOverrides: {
+                root: {
+                    width: "360px"
+                }
             }
         }
     },
