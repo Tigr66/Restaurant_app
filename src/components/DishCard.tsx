@@ -65,7 +65,7 @@ const DishCard = ({ dish }: DishCardProps) => {
                     <>
                         <IconButton
                             aria-label="Отнять одно"
-                            onClick={() => dispatch(deleteFromCart(dish.id))}
+                            onClick={() => dispatch(deleteFromCart(dish))}
                         >
                             <RemoveSharpIcon color="primary" />
                         </IconButton>

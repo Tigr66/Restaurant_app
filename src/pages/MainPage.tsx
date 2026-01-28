@@ -1,4 +1,4 @@
-import { Stack } from "@mui/material";
+import { Box, CircularProgress, Stack } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { type AppDispatch, type RootState } from "../redux/store";
 import { useEffect } from "react";
@@ -9,19 +9,22 @@ import Cart from "../components/Cart";
 const MainPage = () => {
     const dispatch = useDispatch<AppDispatch>();
     const dishes = useSelector((state: RootState) => state.restaurant.dishes);
+    const isLoading = useSelector(
+        (state: RootState) => state.restaurant.isLoading,
+    );
 
     useEffect(() => {
         dispatch(getDishesThunk());
     }, []);
 
     return (
-        <Stack direction="row">
+        <Stack direction="row" alignItems="flex-start" sx={{ gap: 2 }}>
             <Stack
                 direction="column"
                 alignItems="center"
                 spacing={2}
                 sx={{
-                    maxHeight: "99vh",
+                    height: "99vh",
                     overflowY: "auto",
                     width: "70%",
                     p: 2,
@@ -35,9 +38,23 @@ const MainPage = () => {
                     borderRight: "2px solid black",
                 }}
             >
-                {dishes.map((el) => {
-                    return <DishCard key={el.id} dish={el} />;
-                })}
+                {isLoading ? (
+                    <Box
+                        sx={{
+                            flex: 1,
+                            width: "100%",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                        }}
+                    >
+                        <CircularProgress size={60} />
+                    </Box>
+                ) : (
+                    dishes.map((el) => {
+                        return <DishCard key={el.id} dish={el} />;
+                    })
+                )}
             </Stack>
             <Cart />
         </Stack>

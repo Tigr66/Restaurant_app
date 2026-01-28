@@ -6,6 +6,8 @@ import { getDishesThunk, setOrderThunk } from "./restaurantThunks";
 const initialState: IReataurantState = {
     dishes: [],
     cart: [],
+    delivery: 500,
+    total: 0,
     errorMessage: "",
     successMessage: "",
     isLoading: false,
@@ -26,17 +28,38 @@ const restaurantSlice = createSlice({
             );
 
             if (indexDish === -1) {
-                state.cart.push({ count: 1, dish: action.payload });
+                state.cart.push({
+                    count: 1,
+                    total: action.payload.price,
+                    dish: action.payload,
+                });
                 return;
             }
 
             state.cart[indexDish].count++;
+            state.cart[indexDish].total += action.payload.price;
         },
-        deleteFromCart(state, action: PayloadAction<string>) {
+        deleteFromCart(state, action: PayloadAction<IDish>) {
             const indexDish: number = state.cart.findIndex(
-                (el) => el.dish.id === action.payload,
+                (el) => el.dish.id === action.payload.id,
             );
+
+            if (state.cart[indexDish].count === 1) {
+                state.cart = state.cart.filter(
+                    (el) => el.dish.id !== action.payload.id,
+                );
+                return;
+            }
+
             if (indexDish !== -1) state.cart[indexDish].count--;
+            if (indexDish !== -1)
+                state.cart[indexDish].total -= action.payload.price;
+        },
+        calculateTotal(state) {
+            state.total =
+                state.cart.reduce((acc, dish) => {
+                    return acc + dish.total;
+                }, 0) + state.delivery;
         },
     },
     extraReducers(builder) {
@@ -74,6 +97,6 @@ const restaurantSlice = createSlice({
     },
 });
 
-export const { clearMessages, addToCart, deleteFromCart } =
+export const { clearMessages, addToCart, deleteFromCart, calculateTotal } =
     restaurantSlice.actions;
 export default restaurantSlice.reducer;
