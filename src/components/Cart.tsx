@@ -4,7 +4,10 @@ import type { AppDispatch } from "../redux/store";
 import type { RootState } from "../redux/store";
 import CartItem from "./CartItem";
 import { useEffect } from "react";
-import { calculateTotal } from "../redux/restaurantSlice/restaurantSlice";
+import {
+    calculateTotal,
+    switchModal,
+} from "../redux/restaurantSlice/restaurantSlice";
 
 const Cart = () => {
     const dispatch = useDispatch<AppDispatch>();
@@ -32,13 +35,13 @@ const Cart = () => {
             <Typography variant="h6" sx={{ borderBottom: "1px solid black" }}>
                 Корзина:
             </Typography>
-            <List
+            <Box
                 sx={{
-                    borderBottom: "1px solid black",
-                    maxHeight: "185px",
+                    height: "185px",
                     overflow: "auto",
+                    borderBottom: "1px solid black",
                     "&::-webkit-scrollbar": {
-                        width: 8,
+                        width: 4,
                     },
                     "&::-webkit-scrollbar-thumb": {
                         backgroundColor: "#888",
@@ -46,14 +49,35 @@ const Cart = () => {
                     },
                 }}
             >
-                {cart.map((item) => {
-                    return <CartItem key={item.dish.id} item={item} />;
-                })}
-            </List>
+                {cart.length ? (
+                    <List>
+                        {cart.map((item) => {
+                            return <CartItem key={item.dish.id} item={item} />;
+                        })}
+                    </List>
+                ) : (
+                    <Typography variant="body1" textAlign="center">
+                        Пусто {":("}
+                    </Typography>
+                )}
+            </Box>
             <Stack sx={{ p: 1, gap: "5px" }}>
-                <Typography variant="h5">Доставка: {delivery}</Typography>
-                <Typography variant="h5">Общая сумма: {total}</Typography>
-                <Button variant="outlined">Заказать</Button>
+                <Typography variant="h5">
+                    Доставка: {cart.length ? delivery : 0}
+                </Typography>
+                <Typography variant="h5">
+                    Общая сумма: {cart.length ? total : 0}
+                </Typography>
+                <Button
+                    variant="outlined"
+                    disabled={!cart.length}
+                    sx={{
+                        transition: "all 0.3s ease",
+                    }}
+                    onClick={() => dispatch(switchModal())}
+                >
+                    Заказать
+                </Button>
             </Stack>
         </Box>
     );

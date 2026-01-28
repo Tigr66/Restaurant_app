@@ -12,6 +12,7 @@ const initialState: IReataurantState = {
     successMessage: "",
     isLoading: false,
     isSending: false,
+    isModal: false,
 };
 
 const restaurantSlice = createSlice({
@@ -61,6 +62,9 @@ const restaurantSlice = createSlice({
                     return acc + dish.total;
                 }, 0) + state.delivery;
         },
+        switchModal(state) {
+            state.isModal = !state.isModal;
+        },
     },
     extraReducers(builder) {
         builder
@@ -97,6 +101,6 @@ const restaurantSlice = createSlice({
     },
 });
 
-export const { clearMessages, addToCart, deleteFromCart, calculateTotal } =
+export const { clearMessages, addToCart, deleteFromCart, calculateTotal,switchModal } =
     restaurantSlice.actions;
 export default restaurantSlice.reducer;

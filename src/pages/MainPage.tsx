@@ -1,10 +1,11 @@
-import { Box, CircularProgress, Stack } from "@mui/material";
+import { Box, CircularProgress , Stack } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { type AppDispatch, type RootState } from "../redux/store";
 import { useEffect } from "react";
 import { getDishesThunk } from "../redux/restaurantSlice/restaurantThunks";
 import DishCard from "../components/DishCard";
 import Cart from "../components/Cart";
+import OrderModal from "../components/OrderModal";
 
 const MainPage = () => {
     const dispatch = useDispatch<AppDispatch>();
@@ -57,6 +58,7 @@ const MainPage = () => {
                 )}
             </Stack>
             <Cart />
+            <OrderModal />
         </Stack>
     );
 };

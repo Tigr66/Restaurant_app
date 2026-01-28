@@ -10,4 +10,5 @@ export interface IReataurantState {
     successMessage: string;
     isLoading: boolean;
     isSending: boolean;
+    isModal: boolean;
 }

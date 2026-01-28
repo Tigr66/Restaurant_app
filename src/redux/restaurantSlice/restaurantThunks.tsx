@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import type { IDish } from "../../interfaces/IDish";
+import type { IOrder } from "../../interfaces/IOrder";
 import { firebaseApi } from "../../api/firebaseApi";
 
 export const getDishesThunk = createAsyncThunk<IDish[]>(
@@ -19,7 +20,7 @@ export const getDishesThunk = createAsyncThunk<IDish[]>(
     },
 );
 
-export const setOrderThunk = createAsyncThunk<void, number>(
+export const setOrderThunk = createAsyncThunk<void, IOrder>(
     "restaurant-slice/post",
     async (info) => {
         await firebaseApi.post("/orders.json", info);
