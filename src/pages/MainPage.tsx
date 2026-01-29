@@ -49,7 +49,11 @@ const MainPage = () => {
                     {successMessage}
                 </Alert>
             )}
-            <Stack direction="row" alignItems="flex-start" sx={{ gap: 2 }}>
+            <Stack
+                direction="row"
+                alignItems="flex-start"
+                sx={{ gap: 2, bgcolor: "#f6f7f9" }}
+            >
                 <Stack
                     direction="column"
                     alignItems="center"
@@ -63,10 +67,10 @@ const MainPage = () => {
                             width: 8,
                         },
                         "&::-webkit-scrollbar-thumb": {
-                            backgroundColor: "#888",
+                            bgcolor: "#C9CEDA",
                             borderRadius: 8,
                         },
-                        borderRight: "2px solid black",
+                        borderRight: "2px solid #E6E8F0",
                     }}
                 >
                     {isLoading || !dishes.length ? (
@@ -82,7 +86,10 @@ const MainPage = () => {
                             {isLoading ? (
                                 <CircularProgress size={60} />
                             ) : (
-                                <Typography variant="h4">
+                                <Typography
+                                    variant="h4"
+                                    sx={{ color: "#6B7280" }}
+                                >
                                     Не получилось получить блюда {":("}
                                 </Typography>
                             )}

@@ -21,8 +21,14 @@ const CartItem = ({ item }: CartItemProps) => {
     return (
         <ListItem
             sx={{
-                width: "90%",
+                width: "98%",
+                display: "flex",
                 justifyContent: "space-between",
+                borderRadius: "12px",
+                backgroundColor: "#FFFFFF",
+                border: "1px solid #E6E8F0",
+                mb: "4px",
+                "&:hover": { backgroundColor: "#F9FAFB" },
             }}
         >
             <Stack
@@ -35,11 +41,20 @@ const CartItem = ({ item }: CartItemProps) => {
                 <IconButton
                     aria-label="Отнять одно"
                     onClick={() => dispatch(deleteFromCart(item.dish))}
+                    sx={{
+                        width: 30,
+                        height: 30,
+                        borderRadius: "50%",
+                        border: "1px solid #E6E8F0",
+                        backgroundColor: "#FFFFFF",
+                        "&:hover": { backgroundColor: "#F1F5F9" },
+                        "&:active": { transform: "scale(0.96)" },
+                    }}
                 >
                     <RemoveSharpIcon color="error" />
                 </IconButton>
             </Stack>
-            <Typography variant="body1">{`${item.total} тг.`}</Typography>
+            <Typography variant="body1">{`${item.total} тг`}</Typography>
         </ListItem>
     );
 };

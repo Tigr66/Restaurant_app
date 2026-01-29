@@ -24,27 +24,36 @@ const Cart = () => {
     return (
         <Box
             sx={{
-                border: "1px solid black",
                 p: 1,
                 width: "25%",
                 height: "50%",
-                borderRadius: "8px",
+                border: "1px solid #E6E8F0",
+                borderRadius: "16px",
+                backgroundColor: "#FFFFFF",
+                boxShadow: "0 12px 30px rgba(17, 24, 39, 0.08)",
                 mt: 8,
             }}
         >
-            <Typography variant="h6" sx={{ borderBottom: "1px solid black" }}>
+            <Typography
+                variant="h6"
+                sx={{
+                    fontSize: 18,
+                    fontWeight: 900,
+                    borderBottom: "1px solid #E6E8F0",
+                }}
+            >
                 Корзина:
             </Typography>
             <Box
                 sx={{
                     height: "185px",
                     overflow: "auto",
-                    borderBottom: "1px solid black",
+                    borderBottom: "1px solid #E6E8F0",
                     "&::-webkit-scrollbar": {
-                        width: 4,
+                        width: 8,
                     },
                     "&::-webkit-scrollbar-thumb": {
-                        backgroundColor: "#888",
+                        bgcolor: "#C9CEDA",
                         borderRadius: 8,
                     },
                 }}
@@ -56,17 +65,23 @@ const Cart = () => {
                         })}
                     </List>
                 ) : (
-                    <Typography variant="body1" textAlign="center">
+                    <Typography
+                        variant="body1"
+                        sx={{
+                            color: "#6B7280",
+                            textAlign: "center",
+                        }}
+                    >
                         Пусто {":("}
                     </Typography>
                 )}
             </Box>
             <Stack sx={{ p: 1, gap: "5px" }}>
-                <Typography variant="h5">
-                    Доставка: {cart.length ? delivery : 0} тг.
+                <Typography variant="h5" fontWeight={600}>
+                    Доставка: {cart.length ? delivery : 0} тг
                 </Typography>
-                <Typography variant="h5">
-                    Общая сумма: {cart.length ? total : 0} тг.
+                <Typography variant="h5" fontWeight={700}>
+                    Общая сумма: {cart.length ? total : 0} тг
                 </Typography>
                 <Button
                     variant="outlined"
