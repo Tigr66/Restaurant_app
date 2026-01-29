@@ -31,14 +31,12 @@ const restaurantSlice = createSlice({
             if (indexDish === -1) {
                 state.cart.push({
                     count: 1,
-                    total: action.payload.price,
                     dish: action.payload,
                 });
                 return;
             }
 
             state.cart[indexDish].count++;
-            state.cart[indexDish].total += action.payload.price;
         },
         deleteFromCart(state, action: PayloadAction<IDish>) {
             const indexDish: number = state.cart.findIndex(
@@ -53,13 +51,11 @@ const restaurantSlice = createSlice({
             }
 
             if (indexDish !== -1) state.cart[indexDish].count--;
-            if (indexDish !== -1)
-                state.cart[indexDish].total -= action.payload.price;
         },
         calculateTotal(state) {
             state.total =
-                state.cart.reduce((acc, dish) => {
-                    return acc + dish.total;
+                state.cart.reduce((acc, item) => {
+                    return acc + item.count * item.dish.price;
                 }, 0) + state.delivery;
         },
         switchModal(state) {

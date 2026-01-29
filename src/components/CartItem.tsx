@@ -54,7 +54,7 @@ const CartItem = ({ item }: CartItemProps) => {
                     <RemoveSharpIcon color="error" />
                 </IconButton>
             </Stack>
-            <Typography variant="body1">{`${item.total} тг`}</Typography>
+            <Typography variant="body1">{`${item.count * item.dish.price} тг`}</Typography>
         </ListItem>
     );
 };
