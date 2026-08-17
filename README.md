@@ -1,73 +1,158 @@
-# React + TypeScript + Vite
+# Restaurant App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Простое приложение для ресторана с возможностью просмотра меню, добавления блюд в корзину и оформления заказов.
 
-Currently, two official plugins are available:
+## Описание проекта
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Это React-приложение с использованием TypeScript, Redux Toolkit для управления состоянием и Firebase Realtime Database для хранения данных. Приложение позволяет:
 
-## React Compiler
+- Просматривать меню ресторана
+- Добавлять блюда в корзину
+- Управлять количеством блюд в корзине
+- Оформлять заказы с указанием контактных данных
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Установка и запуск
 
-## Expanding the ESLint configuration
+### Требования
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- Node.js (версия 18 или выше)
+- npm или yarn
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Шаги для запуска:
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+1. **Клонирование репозитория**
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+    ```bash
+    git clone <repository-url>
+    cd Restaurant_app
+    ```
+
+2. **Установка зависимостей**
+
+    ```bash
+    npm install
+    ```
+
+3. **Настройка переменных окружения**
+
+    Создайте файл `.env` в корне проекта на основе `.env.expample`:
+
+    ```bash
+    cp .env.expample .env
+    ```
+
+    Отредактируйте `.env` файл, заменив `https://your-firebase-project.firebaseio.com` на URL вашего Firebase проекта:
+
+    ```
+    VITE_FIREBASE_URL=https://your-firebase-project.firebaseio.com
+    ```
+
+4. **Запуск проекта**
+
+    ```bash
+    npm run dev
+    ```
+
+    Приложение будет доступно по адресу `http://localhost:5173`
+
+5. **Сборка для продакшена**
+    ```bash
+    npm run build
+    ```
+
+## Настройка Firebase
+
+### Создание Firebase проекта
+
+1. Перейдите на [Firebase Console](https://console.firebase.google.com/)
+2. Создайте новый проект или выберите существующий
+3. В разделе "Build" выберите "Realtime Database"
+4. Создайте базу данных
+
+### Настройка правил доступа
+
+Для разработки установите правила в режиме чтения/записи:
+
+```json
+{
+    "rules": {
+        ".read": true,
+        ".write": true
+    }
+}
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Получение URL базы данных
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+1. В Firebase Console откройте ваш проект
+2. Перейдите в раздел "Realtime Database"
+3. Скопируйте URL базы данных (обычно имеет формат `https://your-project-id.firebaseio.com`)
+4. Вставьте этот URL в файл `.env` вместо `https://your-firebase-project.firebaseio.com`
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Создание структуры данных
+
+В приложении нет возможности менять блюда через интерфейс, поэтому блюда нужно добавлять напрямую в Firebase.
+
+1. В Firebase Console откройте "Realtime Database"
+2. Создайте путь `/dishes`
+3. Добавьте блюда со следующей структурой:
+
+```json
+{
+    "dishes": {
+        "dish1": {
+            "name": "Название блюда",
+            "price": 299,
+            "image": "https://example.com/image.jpg"
+        },
+        "dish2": {
+            "name": "Еще одно блюдо",
+            "price": 399,
+            "image": "https://example.com/image2.jpg"
+        }
+    }
+}
 ```
+
+### Структура данных блюда
+
+Каждое блюдо должно содержать следующие поля:
+
+- `name` (string) - название блюда
+- `price` (number) - цена блюда
+- `image` (string) - ссылка на изображение блюда
+
+Пример добавления блюда через Firebase Console:
+
+```
+dishes/
+  ├── burger/
+  │   ├── name: "Классический бургер"
+  │   ├── price: 350
+  │   └── image: "https://example.com/burger.jpg"
+  ├── pizza/
+  │   ├── name: "Маргарита"
+  │   ├── price: 450
+  │   └── image: "https://example.com/pizza.jpg"
+  └── salad/
+      ├── name: "Цезарь"
+      ├── price: 320
+      └── image: "https://example.com/salad.jpg"
+```
+
+## Технологии
+
+- **React 19** - UI библиотека
+- **TypeScript** - типизация
+- **Vite** - сборщик проекта
+- **Redux Toolkit** - управление состоянием
+- **Material UI** - UI компоненты
+- **Axios** - HTTP клиент
+- **Firebase Realtime Database** - база данных
+
+## Скрипты
+
+- `npm run dev` - запуск сервера разработки
+- `npm run build` - сборка для продакшена
+- `npm run lint` - проверка кода линтером
+- `npm run preview` - предпросмотр продакшен-сборки
