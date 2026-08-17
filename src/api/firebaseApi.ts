@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URl: string = "https://project-1-3582b-default-rtdb.firebaseio.com/";
+const BASE_URl: string = import.meta.env.VITE_FIREBASE_URL;
 
 export const firebaseApi = axios.create({
     baseURL: BASE_URl,
